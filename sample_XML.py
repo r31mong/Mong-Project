@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 #import xml.etree.ElementTree as ET
 from lxml import etree as ET
 #Get the XML File Data
 stream = open('G:\GIT\Mong-Project\simple.xml','r')
+=======
+import xml.etree.ElementTree as ET
+
+#Get the XML File Data
+stream = open('simple.xml','r')
+>>>>>>> 2365c2d30d97c84943a9383e9df1aab456ffec9a
 
 #Parse the data into an ElementTree Object
 xml = ET.parse(stream)
