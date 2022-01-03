@@ -1,0 +1,23 @@
+---
+people:
+- Id: 1
+  FirstName: Rohan Abdiel
+  LastName: Santos
+  Email: rohan.abdiel.santos@gmail.com
+  Active: true
+- Id: 2
+  FirstName: Raizel Alia
+  LastName: Santos
+  Email: raizel.alia.santos@gmail.com
+  Active: true
+- Id: 3
+  FirstName: Abigail
+  LastName: Santos
+  Email: abigail.mendoza86@gmail.com
+  Active: false
+...
+--- #This is the start of a new document in YAML
+item1: item1value
+item2: item2value
+
+
