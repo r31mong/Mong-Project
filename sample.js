@@ -32,3 +32,5 @@ console.log(myObj.people[1].firstName)
 console.log(typeof myObj.people[1].age)
 console.log(typeof myObj.people[1].firstName)
 console.log(typeof myObj.people[1].active)
+
+console.log(myObj.people[0])
