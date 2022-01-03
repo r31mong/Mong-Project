@@ -24,3 +24,4 @@ myObj={    "people" : [
   }
 
 console.log(myObj.people[1].lastName)
+console.log(myObj.people[1].firstName)
