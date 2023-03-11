@@ -1,0 +1,16 @@
+---
+- name: "Loop test"
+  hosts: uk
+  connection: network_cli
+  gather_facts: yes
+  tasks:
+  - name: "Loop through IP address"
+    ios_facts:
+      gather_subset: all
+  - debug:
+      #msg: "{{ item.key }}"
+      #msg: "{{ ansible_net_interfaces['{{item}}'] }}"
+      msg: "{{ ansible_net_hostname }} has an Interface {{ item.key }} with IP address {{ item.value.ipv4.0.address }}"
+    #loop: "{{ ansible_net_interfaces | dict2items }}"
+    loop: "{{ ansible_net_interfaces | dict2items }}"
+    when: item['value']['ipv4'] != []

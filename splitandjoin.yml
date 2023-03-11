@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  gather_facts: false
+  connection: local
+  
+  tasks:
+    - name:
+      vars: 
+        this_string: "removed 10.140.114.194  4        62371    1908    1922       29    0    0 02:43:33       25\nremoved 10.140.114.244  4        65005    1966    1510       29    0    0 02:43:31        1\nadded 10.140.114.194  4        62371    1916    1930       29    0    0 02:44:12       25\nadded 10.140.114.244  4        65005    1974    1516       29    0    0 02:44:10        1"
+      debug: var=this_string.split('\n')
+        #msg: "{{ item }}"
+      #loop: "{{ this_string.split('\n') }}"

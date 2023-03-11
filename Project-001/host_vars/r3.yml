@@ -1,0 +1,66 @@
+---
+
+interface: #cisco.ios.ios_interfaces #cisco.ios.ios_l3_interfaces
+  - name: GigabitEthernet2
+    description: "**** ANSIBLE-IOSXE-R2 Gi2 - Gi3 ****"
+    address: 10.23.1.1/30
+    enable: true
+    speed: 10000
+  - name: GigabitEthernet3
+    description: "**** Reserved for LAN ****"
+    address: 172.16.0.2/24
+    enable: false
+    speed: 10000
+  - name: Loopback 1000
+    description: "**** Management-Loopback ****"
+    address: 3.3.3.3/32
+    enable: true
+  - name: Loopback 1100
+    description: "**** Additional-Loopback ****"
+    address: 100.3.3.3/32
+    enable: true
+
+ospf: #cisco.ios.ios_ospfv2
+  - rid: 3.3.3.3
+    process_id: 100
+    interfaces: #cisco.ios.ios_ospf_interfaces
+    - name: GigabitEthernet2
+      address_family:
+        - afi: ipv4
+          process:
+            id: 100
+            area_id: 0
+          cost:
+            interface_cost: 20
+    - name: GigabitEthernet3
+      address_family:
+        - afi: ipv4
+          process:
+            id: 100
+            area_id: 0
+          cost:
+            interface_cost: 20
+    - name: Loopback 1000
+      address_family:
+        - afi: ipv4
+          process:
+            id: 100
+            area_id: 0
+          cost:
+            interface_cost: 20
+
+# cisco.ios.ios_bgp module
+BGP_ENABLE: "TRUE"
+BGP:
+  - ASN: "65003"
+    router_id: 3.3.3.3
+    peers: 
+      - neighbor: "1.1.1.1"
+        ebgp_multihop: 10
+        enabled: true
+        peer_asn: "65001"
+        update_source: Loopback1000
+        description: "BGP Peering to ANSIBLE-IOSXE-R1 - Loopback1000"
+    networks:
+      - prefix: 100.0.0.0
+        mask: 8

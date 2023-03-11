@@ -1,0 +1,8 @@
+---
+# defaults file for eigrp_role
+TASK_ONE_NAME: "Pushing EIGRP Config" 
+TASK_TWO_NAME: "Display EIGRP Config to be configured"
+TASK_THREE_NAME: "Verify EIGRP Config"
+TASK_FOUR_NAME: "Show EIGRP Config Results"
+eigrp_template: "eigrp_role.j2"
+show_commands: "show run | section eigrp"

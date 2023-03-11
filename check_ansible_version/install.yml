@@ -1,0 +1,12 @@
+---
+- name: Check the ansible version
+  hosts: '{{ servers }}'
+
+  tasks:
+  - name: Install collection
+    command: cat /proc/sys/kernel/hostname #ansible-galaxy collection install cisco.ios -p /usr/share/ansible/collections -vvv
+    register: install_output
+  
+  - name: print
+    debug:
+      msg: "{{ install_output }}"

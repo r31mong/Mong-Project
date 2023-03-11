@@ -1,0 +1,5 @@
+---
+# handlers file for eigrp_role
+- name: eigrp_handler_example
+  debug:
+    msg: "{{ eigrp_result.commands }}"

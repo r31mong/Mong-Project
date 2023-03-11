@@ -1,0 +1,18 @@
+---
+
+- name: "My Banner Playbook"
+  hosts: all
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+    - name: "configure MOTD Banner"
+      cisco.ios.ios_banner:
+        banner: motd
+        text: |
+          ***** This router: {{ inventory_hostname }} - {{ ansible_host }} is monitored. Unauthorized access is prohibited. *****
+        state: present
+
+      register: my_banner
+
+    - debug: var=my_banner

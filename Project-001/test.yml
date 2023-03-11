@@ -1,0 +1,19 @@
+---
+
+- name: "Execute Ansible_config"
+  hosts: all
+  gather_facts: false
+  connection: network_cli
+
+  tasks:
+  - name: "Show BGP"
+    cisco.ios.ios_command:
+      commands:
+        - "show ip bgp summary"
+    register: BGP_SHOW_output          
+    when: BGP_ENABLE == "TRUE"
+    
+  - name: "Show output"
+    debug:
+      msg: "{{BGP_SHOW_output.stdout_lines}}"
+    when: BGP_ENABLE == "TRUE"

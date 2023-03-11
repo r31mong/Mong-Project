@@ -1,0 +1,12 @@
+---
+
+- name: "Execute Ansible_config"
+  hosts: awx
+  gather_facts: False
+
+  tasks:
+    - name: Check Dist Version
+      ansible.builtin.command: cat /etc/os-release
+      register: response
+
+    - debug: msg="{{ response.stdout }}"

@@ -1,0 +1,13 @@
+---
+HOSTNAME: "R1-NEW"
+
+OSPF:
+  - interface: "ge-0/0/0.0"
+    area: "0.0.0.0"
+
+SNMP:
+  - community: "IPvzero11"
+
+BGP:
+  ASN: "65007"
+  ASN_TYPE: "private"

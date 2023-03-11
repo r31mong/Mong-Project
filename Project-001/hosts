@@ -1,0 +1,18 @@
+all:
+  hosts:
+  children:
+    routers:
+      children:
+        local:
+          hosts: 
+            awx:
+              ansible_host: localhost
+          connection: local
+        Router:
+          hosts:
+            r1:
+              ansible_host: 192.168.1.81
+            r2:
+              ansible_host: 192.168.1.82
+            r3:
+              ansible_host: 192.168.1.83

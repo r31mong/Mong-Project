@@ -1,0 +1,49 @@
+---
+
+interface: #cisco.ios.ios_interfaces #cisco.ios.ios_l3_interfaces
+  - name: GigabitEthernet2
+    description: "**** ANSIBLE-IOSXE-R1 Gi2 - Gi2 ****"
+    address: 10.12.1.2/30
+    enable: true
+    speed: 10000
+  - name: GigabitEthernet3
+    description: "**** ANSIBLE-IOSXE-R1 Gi3 - Gi2 ****"
+    address: 10.23.1.2/30
+    enable: true
+    speed: 10000
+  - name: Loopback 1000
+    description: "**** Management-Loopback ****"
+    address: 2.2.2.2/32
+    enable: true
+
+ospf: #cisco.ios.ios_ospfv2
+  - rid: 2.2.2.2
+    process_id: 100
+    interfaces: #cisco.ios.ios_ospf_interfaces
+    - name: GigabitEthernet2
+      address_family:
+        - afi: ipv4
+          process:
+            id: 100
+            area_id: 0
+          cost:
+            interface_cost: 20
+    - name: GigabitEthernet3
+      address_family:
+        - afi: ipv4
+          process:
+            id: 100
+            area_id: 0
+          cost:
+            interface_cost: 20
+    - name: Loopback 1000
+      address_family:
+        - afi: ipv4
+          process:
+            id: 100
+            area_id: 0
+          cost:
+            interface_cost: 20
+
+# cisco.ios.ios_bgp module
+BGP_ENABLE: "FALSE"

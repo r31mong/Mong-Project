@@ -1,0 +1,8 @@
+---
+- name: Print some var info
+  hosts: r1
+  gather_facts: false
+  tasks:
+    - name: Displaying var stuff
+      debug:
+        msg: "{{ hostvars[inventory_hostname] }}"

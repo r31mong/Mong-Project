@@ -1,0 +1,84 @@
+---
+# tasks file for base_config
+- name: "Configure L2 - Interfaces"
+  cisco.ios.ios_interfaces:
+    config:
+    - name: "{{ item.name }}"
+      description: "{{ item.description }}"
+      enabled: "{{ item.enable }}"
+      speed: "{{ item.speed }}"
+    state: merged
+  when: item.name.split().0 != "Loopback"
+  loop: "{{ interface }}"
+  register: L2_interface_output
+
+- name: "Configure Loopback Interfaces"
+  cisco.ios.ios_interfaces:
+    config:
+    - name: "{{ item.name }}"
+      description: "{{ item.description }}"
+      enabled: "{{ item.enable }}"
+    state: merged
+  when: item.name.split().0 == "Loopback"
+  loop: "{{ interface }}"
+  register: Loopback_interface_output
+
+
+- name: "Configure L3 - Interfaces"
+  cisco.ios.ios_l3_interfaces:
+    config:
+    - name: "{{ item.name }}"
+      ipv4:
+      - address: "{{ item.address }}"
+    state: replaced
+  loop: "{{ interface }}"
+  register: L3_interface_output
+
+
+- name: "Configure Routing OSPF"
+  cisco.ios.ios_ospfv2:
+    config:
+      processes:
+      - process_id: "{{ ospf.0.process_id }}"
+        router_id: "{{ ospf.0.rid }}"
+        passive_interfaces:
+          default: true
+          interface:
+            set_interface: False
+            name:
+              - "{{ item.name }}"
+    state: merged  
+  loop: "{{ ospf.0.interfaces }}"
+  register: Routing_OSPF_output
+
+- name: "Show run interface OSPF"
+  cisco.ios.ios_command:
+    commands:
+      - "show run interface {{ item.name }}"
+  loop: "{{ ospf.0.interfaces }}"
+  notify: hndlr_Interface_output
+  register: Int_SHOW_output
+
+
+- name: "Configure Interface Level OSPF"
+  cisco.ios.ios_ospf_interfaces:
+    config:
+      - name: "{{ item.name }}"
+        address_family:
+          - afi: "{{ item.address_family.0.afi }}"
+            process:
+              id: "{{ item.address_family.0.process.id }}"
+              area_id: "{{ item.address_family.0.process.area_id }}"
+            cost:
+              interface_cost: "{{ item.address_family.0.cost.interface_cost }}"
+    state: merged
+  loop: "{{ ospf.0.interfaces }}"
+  notify: hndlr_Interface_OSPF_output
+  register: Interface_OSPF_output
+
+- name: "Show OSPF"
+  cisco.ios.ios_command:
+    commands:
+      - "show ip ospf neighbor"
+  notify: hndlr_Interface_OSPF_output
+  register: OSPF_SHOW_output

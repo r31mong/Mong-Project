@@ -1,0 +1,14 @@
+---
+- name: "show all variables"
+  hosts: r1
+  connection: network_cli
+  gather_facts: false
+
+  tasks:
+  - name: "TASK1 - show all variables"
+    cisco.ios.ios_facts:
+      gather_subset: all
+      #- '!config' #Gather all except config
+      gather_network_resources: all
+  - debug:
+      msg: "{{ hostvars[inventory_hostname] }}"

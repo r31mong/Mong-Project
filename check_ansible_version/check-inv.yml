@@ -1,0 +1,10 @@
+---
+- name: Check the Inventory
+  hosts: Router
+  gather_facts: false
+
+  tasks:
+  
+    - name: Display the ansible version
+      debug:
+        msg: "Welcome to host {{ inventory_hostname }}!"

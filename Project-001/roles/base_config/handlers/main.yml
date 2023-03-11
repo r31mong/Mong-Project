@@ -1,0 +1,26 @@
+---
+# handlers file for base_config
+- name: hndlr_L2_interface_output
+  debug:
+  #  msg: "{{ L2_interface_output }}"
+
+- name: hndlr_Loopback_interface_output
+  debug:
+  #  msg: "{{ Loopback_interface_output }}"
+
+- name: hndlr_L3_interface_output
+  debug:
+  # msg: "{{ L3_interface_output }}"
+
+- name: hndlr_Routing_OSPF_output
+  debug:
+
+- name: Int_SHOW_output
+  debug:
+    msg: "{{ Int_SHOW_output.stdout_lines }}"
+
+
+- name: hndlr_Interface_OSPF_output
+  debug:
+    msg: "{{ OSPF_SHOW_output.stdout_lines }}"
+

@@ -1,0 +1,8 @@
+---
+- name: Print some var info
+  hosts: uk
+  gather_facts: false
+  tasks:
+    - name: Parse var stuff
+      debug:
+        msg: "{{ hostvars[inventory_hostname].ospf.networks.0 }}"

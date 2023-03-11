@@ -1,0 +1,42 @@
+---
+# tasks file for bgp_config
+
+- name: "Configure Routing BGP on BGP Enabled Devices"
+  cisco.ios.ios_bgp:
+    config:
+      bgp_as: "{{ BGP.0.ASN }}"
+      router_id: "{{ BGP.0.router_id }}"
+      log_neighbor_changes: true
+      neighbors:
+      - neighbor: "{{ item.neighbor }}"
+        ebgp_multihop: "{{ item.ebgp_multihop }}"
+        remote_as: "{{ item.peer_asn }}"
+        description: "{{ item.description }}"
+        update_source: "{{ item.update_source }}"
+        enabled: "{{ item.enabled }}"
+    operation: merge
+  loop: "{{ BGP.0.peers }}"  
+  when: BGP_ENABLE == "TRUE"
+  register: BGP_output
+  notify: hndlr_BGP_SHOW_output
+
+- name: "Configure BGP advertised networks on BGP Enabled Devices"
+  cisco.ios.ios_bgp:
+    config:
+      bgp_as: "{{ BGP.0.ASN }}"
+      networks:
+      - prefix: "{{ item.prefix }}"
+        masklen: "{{ item.mask }}"
+    operation: merge
+  loop: "{{ BGP.0.networks }}"  
+  when: BGP_ENABLE == "TRUE"
+  register: BGP_networks_output
+  notify: hndlr_BGP_SHOW_output
+
+- name: "Show BGP"
+  cisco.ios.ios_command:
+    commands:
+      - "show ip bgp summary"
+  when: BGP_ENABLE == "TRUE"
+  notify: hndlr_BGP_SHOW_output
+  register: BGP_SHOW_output

@@ -1,0 +1,23 @@
+---
+- name: Execute show version command on Cisco devices
+  hosts: Router
+  gather_facts: no
+
+  vars:
+    ansible_network_os: ios
+    ansible_connection: network_cli
+    ansible_become: yes
+
+  tasks:
+  - name: Execute show version command
+    ansible.builtin.ios_command:
+      commands:
+        - show version
+      provider:
+        username: "r31mong"
+        password: "SantosB5L18#!"
+    register: show_version_output
+
+  - name: Print output to console
+    ansible.builtin.debug:
+      var: show_version_output.stdout_lines

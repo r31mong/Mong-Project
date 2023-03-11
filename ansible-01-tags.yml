@@ -1,0 +1,23 @@
+---
+- name: Ansible Tags example
+  hosts: localhost
+  gather_facts: False
+  tasks:
+    - name: Hello World tag example
+      debug:
+        msg: "Hello World!"
+      tags:
+        - hello
+
+    - name: Welcome to Ansible Tags tag example
+      debug:
+        msg: "How are you?"
+      tags:
+        - welcome
+
+    - name: Enjoy NEVER tag example
+      debug:
+        msg: "This tag has NEVER!"
+      tags:
+        - never
+        - enjoy

@@ -1,0 +1,12 @@
+---
+- name: "Loop test"
+  hosts: all
+  connection: network_cli
+  gather_facts: yes
+  tasks:
+  - name: "Loop through IP address"
+    ios_facts:
+      gather_subset: all
+  - debug:
+      msg: "{{ ansible_net_hostname }} has an IP address {{ item }} configured"
+    loop: "{{ ansible_net_all_ipv4_addresses }}"

@@ -1,0 +1,15 @@
+---
+- name: "Loop test"
+  hosts: all
+  connection: network_cli
+  gather_facts: yes
+
+  tasks:
+    - name: "Show Commands"
+      cisco.ios.ios_command:
+        commands: "{{ item }}"
+      loop:
+        - "show ip interface brief"
+      register: my_output
+    - debug: #var=my_output.results.0.stdout.0.split('\n').1.split('    ').0.strip()
+        msg: "Interface {{ my_output.results.0.stdout.0.split('\n').1.split('    ').0.strip() }} of {{ ansible_net_hostname }} has IP address of {{ my_output.results.0.stdout.0.split('\n').1.split('    ').1.strip() }}"

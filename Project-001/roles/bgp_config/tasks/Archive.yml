@@ -1,0 +1,17 @@
+---
+# tasks file for bgp_config
+
+- name: "Configure Routing BGP on BGP Enabled Devices"
+  cisco.ios.ios_bgp:
+    config:
+      bgp_as: "{{ BGP.0.ASN }}"
+      router_id: "{{ BGP.0.router_id }}"
+      log_neighbor_changes: true
+      neighbors:
+      - neighbor: "{{ item.neighbor }}"
+        remote_as: "{{ item.peer_asn }}"
+    operation: merge
+  loop: "{{ BGP.0.peers }}"  
+  when: BGP_ENABLE == "TRUE"
+  notify: hndlr_BGP_output
+  register: BGP_output

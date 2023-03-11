@@ -1,0 +1,7 @@
+---
+# handlers file for bgp_config
+
+- name: hndlr_BGP_SHOW_output
+  debug:
+  #  msg: "{{ BGP_SHOW_output.stdout }}"
+  when: BGP_ENABLE == "TRUE"
