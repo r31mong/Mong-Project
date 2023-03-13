@@ -1,16 +1,14 @@
----
 all:
   hosts:
   children:
     routers:
       children:
         local:
-		  vars:
-		    ansible_connection: local
+          vars:
+            ansible_connection: local
           hosts: 
             awx:
               ansible_host: localhost
-          connection: local
         Router:
           vars:
             ansible_user: r31mong
