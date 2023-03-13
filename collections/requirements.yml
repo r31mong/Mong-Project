@@ -1,3 +1,4 @@
 ansible.netcommon
-ansible.network
 cisco.ios
+cisco.iosxr
+cisco.nxos
