@@ -18,7 +18,7 @@
       run_once: true
 
 - name: "Play2: Backing Up Configurations"
-  hosts: all
+  hosts: Router
   connection: network_cli
 
   tasks:
@@ -47,7 +47,7 @@
       copy:
         content: "{{ result.ansible_facts.napalm_config.startup }}"
         dest: "Backups/{{ hostvars.localhost.TD }}/startup-configs/{{ inventory_hostname }}-startup-config.txt"
-
+        
     - name: "Task 5 of Play 2: Copy Running Configs to Disk"
       copy:
         content: "{{ result.ansible_facts.napalm_config.running }}"

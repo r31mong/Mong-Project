@@ -1,0 +1,8 @@
+ansible_user: r31mong
+ansible_password: SantosB5L18#!
+ansible_ssh_pass: SantosB5L18#!
+ansible_become_pass: SantosB5L18#!
+ansible_network_os: "cisco.ios.ios"
+napalm_platform: "ios"
+ansible_connection: network_cli
+ansible_become_method: enable

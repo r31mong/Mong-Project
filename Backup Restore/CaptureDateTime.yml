@@ -1,5 +1,4 @@
----
-- name: "Test Playbook - Capture Date time"
+- name: "Play 1: Test Playbook - Capture Date time"
   hosts: localhost
   
   tasks:
@@ -9,9 +8,24 @@
           - "ansible_date_time"
 
     - name: "Task 2: Recording Variable"
-      set_facts:
-        TD: "{{ ansible_date_time.date }}"
+      set_fact:
+        D: "{{ ansible_date_time.date }}"
+        H: "{{ ansible_date_time.hour }}"
+        M: "{{ ansible_date_time.minute }}"
+        S: "{{ ansible_date_time.second }}"
 
-    - name: "Task 3: Print variable TD"
+    - name: "Task 3 of Play 1: Creating directories"
+      file: 
+        path: "Backups/{{ D }}--{{ H }}-{{ M }}-{{ S }}"
+        state: directory
+      run_once: true
+
+- name: "Play 2: Backing Up Configurations"
+  hosts: Router
+  connection: network_cli
+
+  tasks:
+    - name: "Task 1 of Play 2: Pull Configurations from Remote Devices"
       debug:
-        msg: "{{ TD }}"
+        msg: "{{ ansible_host }} {{ ansible_user }} {{ ansible_password }} {{ napalm_platform }}"
+
