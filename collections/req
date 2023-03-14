@@ -1,6 +1,0 @@
-ansible.netcommon
-ansible.network
-ansible.utils
-cisco.ios
-cisco.iosxr
-cisco.nxos
