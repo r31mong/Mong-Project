@@ -6,7 +6,7 @@
     - name: "Collect Facts about local host"
       ansible.builtin.setup:
         gather_subset:
-          - "min"
+          - "all"
       register: output
 
     - name: "Print Facts about local host"
