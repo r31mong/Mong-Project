@@ -1,4 +1,5 @@
 ---
+
 - name: "Playbook to test NAPALM-Ansible"
   hosts: Router
   connection: network_cli
@@ -12,6 +13,9 @@
         dev_os: "{{ napalm_platform }}"
       register: result
       
-    - name: "Print Result"
+    - name: print data
       debug:
-        msg: "{{ result }}"
+        var: result
+    #- name: "Print Result"
+    #  debug:
+    #    msg: "{{ result }}"
