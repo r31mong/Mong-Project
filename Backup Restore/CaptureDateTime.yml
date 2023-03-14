@@ -1,0 +1,17 @@
+---
+- name: "Test Playbook - Capture Date time"
+  hosts: localhost
+  
+  tasks:
+    - name: "Task 1: Collect facts about local hosts - Date Time"
+      ansible.builtin.setup:
+        filter:
+          - "ansible_date_time"
+
+    - name: "Task 2: Recording Variable"
+      set_facts:
+        TD: "{{ ansible_date_time.date }}"
+
+    - name: "Task 3: Print variable TD"
+      debug:
+        msg: "{{ TD }}"
