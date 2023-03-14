@@ -1,0 +1,14 @@
+---
+- name: Check the ansible version
+  hosts: localhost
+
+  tasks:
+    - name: "Collect Facts about local host"
+      ansible.builtin.setup:
+        gather_subset:
+          - "min"
+      register: output
+
+    - name: "Print Facts about local host"
+      debug:
+        msg: '{{ output }}'
