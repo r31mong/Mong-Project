@@ -2,6 +2,11 @@
   hosts: localhost
 
   tasks:
+    - name: "Initial setup: Install Napalm Python library"
+      pip:
+        name: napalm
+        state: present
+
     - name: "Task 1 of Play 1: Collect facts about local host"
       ansible.builtin.setup:
         filter:
@@ -52,4 +57,3 @@
       copy:
         content: "{{ result.ansible_facts.napalm_config.running }}"
         dest: "$HOME/Backups/{{ hostvars.localhost.TD }}/running-configs/{{ inventory_hostname }}-running-config.txt"
-
