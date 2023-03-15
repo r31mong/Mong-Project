@@ -12,7 +12,7 @@
         TD: "{{ ansible_date_time.date }}"
 
 - name: "Play 2"
-  hosts: arista
+  hosts: Router
   connection: network_cli
 
   tasks:

@@ -23,6 +23,14 @@
 
   tasks:
     - name: "Task 1 of Play 2: Pull Configurations from Remote Devices"
+      napalm_get_facts:
+        hostname: "{{ ansible_host }}"
+        username: "{{ ansible_user }}"
+        password: "{{ ansible_password }}"
+        dev_os: "{{ napalm_platform }}"
+        filter: ["config"]
+      register: result
+    
+    - name: "Task 2 of Play 2: Print result"
       debug:
-        msg: "{{ ansible_host }} {{ ansible_user }} {{ ansible_password }} {{ napalm_platform }}"
-
+        msg: "{{ result }}"

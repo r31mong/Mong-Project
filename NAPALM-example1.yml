@@ -5,7 +5,7 @@
   connection: network_cli
 
   tasks:
-    - name: "NAME"
+    - name: get facts from device
       napalm_get_facts:
         hostname: "{{ inventory_hostname }}"
         username: "{{ ansible_user }}"

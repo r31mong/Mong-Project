@@ -1,0 +1,238 @@
+Using 3979 out of 33554432 bytes
+!
+
+!
+version 17.3
+service config
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service call-home
+platform qfp utilization monitor load 80
+platform punt-keepalive disable-kernel-core
+platform console virtual
+!
+hostname ANSIBLE-IOSXE-R1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 9 $9$/ZFSFt1QpMkBik$IIVJK/X9LbLbX.fTg8n/m8WVESQ9NcLFXZikaH1apYI
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+ip domain name alibebeph.com
+!
+!
+!
+login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-3276013199
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-3276013199
+ revocation-check none
+ rsakeypair TP-self-signed-3276013199
+!
+crypto pki trustpoint SLA-TrustPoint
+ enrollment pkcs12
+ revocation-check crl
+!
+!
+crypto pki certificate chain TP-self-signed-3276013199
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
+crypto pki certificate chain SLA-TrustPoint
+ certificate ca 01 nvram:CiscoLicensi#1CA.cer
+!
+license udi pid CSR1000V sn 9HKH7JX0BCZ
+diagnostic bootup level minimal
+memory free low-watermark processor 71489
+!
+!
+spanning-tree extend system-id
+!
+username r31mong privilege 15 secret 9 $9$1hHuUl/AEjLmPU$jcWymUlIa/5KHpXTmZjMOaqcQgODP6qWoS3lnYXUmMk
+!
+redundancy
+!
+!
+!
+!
+!
+!
+cdp run
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback1000
+ description **** Management-Loopback ****
+ ip address 1.1.1.1 255.255.255.255
+ ip ospf 100 area 0
+ ip ospf cost 20
+!
+interface Loopback1100
+ description **** Additional-Loopback ****
+ ip address 100.1.1.1 255.255.255.255
+!
+interface GigabitEthernet1
+ description **** MANAGEMENT INTERFACE : DO NOT CHANGE ****
+ ip address 192.168.1.81 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ description **** ANSIBLE-IOSXE-R2 Gi2 - Gi2 ****
+ ip address 10.12.1.1 255.255.255.252
+ ip ospf 100 area 0
+ ip ospf cost 20
+ negotiation auto
+ cdp enable
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ description **** Reserved for LAN ****
+ bandwidth 200000
+ ip address 172.16.0.1 255.255.255.0
+ ip ospf 100 area 0
+ ip ospf cost 20
+ shutdown
+ negotiation auto
+ cdp enable
+ no mop enabled
+ no mop sysid
+!
+router ospf 100
+ router-id 1.1.1.1
+ passive-interface default
+ no passive-interface GigabitEthernet2
+ no passive-interface GigabitEthernet3
+ no passive-interface Loopback1000
+!
+router bgp 65001
+ bgp router-id 1.1.1.1
+ bgp log-neighbor-changes
+ network 100.0.0.0
+ neighbor 3.3.3.3 remote-as 65003
+ neighbor 3.3.3.3 description BGP Peering to ANSIBLE-IOSXE-R3 - Loopback1000
+ neighbor 3.3.3.3 ebgp-multihop 10
+ neighbor 3.3.3.3 update-source Loopback1000
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+ip http client source-interface GigabitEthernet1
+!
+ip ssh version 2
+!
+ip access-list standard VZ_SNMP
+ 10 permit 68.100.100.0 0.0.0.15
+ 20 permit 68.141.160.128 0.0.0.15
+ 30 permit 68.141.32.128 0.0.0.15
+ 40 deny   any log
+!
+!
+ip access-list standard 12
+ 10 permit 68.100.100.0 0.0.0.15
+ 20 remark Verizon Managed Network Solutions Operations
+ 20 permit 68.141.160.128 0.0.0.15
+ 30 permit 68.141.32.128 0.0.0.15
+ 40 deny   any log
+ip access-list standard 27
+ 10 permit 68.100.100.0 0.0.0.15
+ 20 permit 68.141.160.128 0.0.0.15
+ 30 permit 68.141.32.128 0.0.0.15
+ 40 deny   any log
+ip access-list standard 51
+ 10 permit 68.100.100.0 0.0.0.15
+ 20 permit 68.141.160.128 0.0.0.15
+ 30 permit 68.141.32.128 0.0.0.15
+ 40 deny   any log
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+banner motd ^C
+***** This router: r1 - 192.168.1.81 is monitored. Unauthorized access is prohibited. *****
+^C
+!
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+ stopbits 1
+line vty 0 4
+ logging synchronous
+ login local
+ transport input ssh
+line vty 5 15
+ logging synchronous
+ login local
+ transport input ssh
+!
+!
+!
+!
+!
+!
+netconf-yang
+restconf
+end
