@@ -5,7 +5,9 @@
   connection: network_cli
 
   tasks:
-    - name: "Retrieve device facts from via NAPALM"
+    - name: "Retrieve device facts from via NAPALM"  
+      #debug:
+      #  msg: "{{ inventory_hostname }} {{ ansible_user }} {{ ansible_password }} {{ napalm_platform }}"
       napalm_get_facts:
         hostname: "{{ inventory_hostname }}"
         username: "{{ ansible_user }}"
@@ -13,9 +15,9 @@
         dev_os: "{{ napalm_platform }}"
       register: result
       
-    - name: print data
-      debug:
-        var: result
+    #- name: print data
+    #  debug:
+    #    var: result
     #- name: "Print Result"
     #  debug:
     #    msg: "{{ result }}"

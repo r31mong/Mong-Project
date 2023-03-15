@@ -9,14 +9,11 @@
 
     - name: "Task 2: Recording Variable"
       set_fact:
-        D: "{{ ansible_date_time.date }}"
-        H: "{{ ansible_date_time.hour }}"
-        M: "{{ ansible_date_time.minute }}"
-        S: "{{ ansible_date_time.second }}"
+        TD: "{{ ansible_date_time.date }}"
 
     - name: "Task 3 of Play 1: Creating directories"
       file: 
-        path: "Backups/{{ D }}--{{ H }}-{{ M }}-{{ S }}"
+        path: "Backups/{{ TD }}"
         state: directory
       run_once: true
 
