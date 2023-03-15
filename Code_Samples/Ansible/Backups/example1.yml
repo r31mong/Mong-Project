@@ -6,7 +6,7 @@
       pip:
         name: napalm
         state: present
-
+        
     - name: "Task 1 of Play 1: Collect facts about local host"
       ansible.builtin.setup:
         filter:
@@ -27,6 +27,11 @@
   connection: network_cli
 
   tasks:
+    - name: "Initial setup: Install Napalm Python library"
+      pip:
+        name: napalm
+        state: present
+
     - name: "Task 1 of Play 2: Pull Configurations from Remote Devices"
       napalm_get_facts:
         hostname: "{{ ansible_host }}"
