@@ -18,7 +18,7 @@
   tasks:
     - name: "Create a Diff directory"
       file: 
-        path: "diffs/{{ hostvars.localhost.TD }}/{{ inventory_hostname }}"
+        path: "$HOME/Backups/diffs/{{ hostvars.localhost.TD }}/{{ inventory_hostname }}"
         state: directory
       run_once: false
 
@@ -28,11 +28,11 @@
         username: "{{ ansible_user }}"
         password: "{{ ansible_password }}"
         dev_os: "{{ napalm_platform }}"
-        config_file: "{{ inventory_hostname }}-running-config.txt"
+        config_file: "$HOME/Backups/{{ hostvars.localhost.TD }}/running-configs/{{ inventory_hostname }}-running-config.txt"
         commit_changes: true
         replace_config: true
         get_diffs: true
-        diff_file: diffs/{{ hostvars.localhost.TD }}/{{ inventory_hostname }}/{{ inventory_hostname }}-diffs.txt
+        diff_file: $HOME/Backups/diffs/{{ hostvars.localhost.TD }}/{{ inventory_hostname }}/{{ inventory_hostname }}-diffs.txt
         optional_args:
           global_delay_factor: 2
       register: result

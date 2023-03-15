@@ -33,23 +33,23 @@
 
     - name: "Task 2 of Play 2: Create Startup Config Subdirectory"
       file:
-        path: "Backups/{{ hostvars.localhost.TD }}/startup-configs"
+        path: "$HOME/Backups/{{ hostvars.localhost.TD }}/startup-configs"
         state: directory
       run_once: true
 
     - name: "Task 3 of Play 2: Create Running Config Subdirectory"
       file:
-        path: "Backups/{{ hostvars.localhost.TD }}/running-configs"
+        path: "$HOME/Backups/{{ hostvars.localhost.TD }}/running-configs"
         state: directory
       run_once: true
 
     - name: "Task 4 of Play 2: Copy Startup Configs to Disk"
       copy:
         content: "{{ result.ansible_facts.napalm_config.startup }}"
-        dest: "Backups/{{ hostvars.localhost.TD }}/startup-configs/{{ inventory_hostname }}-startup-config.txt"
+        dest: "$HOME/Backups/{{ hostvars.localhost.TD }}/startup-configs/{{ inventory_hostname }}-startup-config.txt"
         
     - name: "Task 5 of Play 2: Copy Running Configs to Disk"
       copy:
         content: "{{ result.ansible_facts.napalm_config.running }}"
-        dest: "Backups/{{ hostvars.localhost.TD }}/running-configs/{{ inventory_hostname }}-running-config.txt"
+        dest: "$HOME/Backups/{{ hostvars.localhost.TD }}/running-configs/{{ inventory_hostname }}-running-config.txt"
 
