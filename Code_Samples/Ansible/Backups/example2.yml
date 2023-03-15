@@ -2,6 +2,11 @@
   hosts: localhost
 
   tasks:
+    - name: "Initial setup: Install Napalm Python library"
+      pip:
+        name: napalm
+        state: present
+        
     - name: "Collect Data Info"
       ansible.builtin.setup:
         filter:
