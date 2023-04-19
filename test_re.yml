@@ -1,0 +1,12 @@
+---
+- hosts: localhost
+  gather_facts: false
+  connection: local
+  
+  tasks:
+  - name: Replace pass1 and pass2 with ****
+    vars:
+      diff_config: |
+        added snmp-server user P19BPvZc P19BPvZc v1 access VZ_SNMP
+    debug:
+      msg: "{{ diff_config | regex_replace('(snmp-server user\\s+)\\S+\\s+\\S+', '\\1**** ****') }}"
